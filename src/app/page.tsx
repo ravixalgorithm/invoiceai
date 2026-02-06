@@ -45,15 +45,18 @@ export default function LandingPage() {
                     <div className="flex flex-col sm:flex-row gap-6 w-full mb-8">
                         <Link
                             href="/dashboard"
-                            className="bg-black text-white text-2xl px-8 py-4 font-bold border-2 border-black shadow-[5px_5px_0px_0px_#6366F1] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[3px_3px_0px_0px_#6366F1] transition-all font-[family-name:var(--font-bricolage)]"
+                            className="bg-black text-white text-2xl px-8 py-4 font-bold border-2 border-black shadow-[5px_5px_0px_0px_#6366F1] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[3px_3px_0px_0px_#6366F1] transition-all font-[family-name:var(--font-bricolage)] text-center"
                         >
-                            Make Money
+                            Start Invoicing
                         </Link>
-                        <button
-                            className="bg-white text-black text-2xl px-8 py-4 font-bold border-2 border-black shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-all font-[family-name:var(--font-bricolage)]"
+                        <a
+                            href="https://github.com/ravixalgorithm/invoiceai"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="bg-white text-black text-2xl px-8 py-4 font-bold border-2 border-black shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-all font-[family-name:var(--font-bricolage)] text-center"
                         >
-                            Steal Code
-                        </button>
+                            View GitHub
+                        </a>
                     </div>
 
                     <div className="flex items-center gap-2 px-4 py-2">
