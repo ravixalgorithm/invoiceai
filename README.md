@@ -1,5 +1,7 @@
 # InvoiceAI 💸
 
+[![wakatime](https://wakatime.com/badge/user/ec7c4227-309f-473e-aed9-683f8c591ab0/project/d52bfe80-f74a-4a0a-a224-a7fb04c4dd9d.svg)](https://wakatime.com/badge/user/ec7c4227-309f-473e-aed9-683f8c591ab0/project/d52bfe80-f74a-4a0a-a224-a7fb04c4dd9d)
+
 <div align="left">
   <img src="public/Octo-Icon.svg" alt="Tambo AI" width="60" />
 </div>
@@ -9,6 +11,8 @@
 InvoiceAI is an intelligent invoicing platform designed to eliminate the manual drudgery of financial administration. By leveraging **Tambo AI**, it allows freelancers and agencies to generate pixel-perfect, industry-standard PDF invoices through a natural conversational interface.
 
 > **Engineered by [Tambo AI](https://tambo.co)**.
+
+
 
 ## 💡 Inspiration
 Freelancers spend too much time fighting with Word templates and generic PDF generators. We wanted to build a tool that feels like a dedicated financial assistant—one that understands context, manages client details automatically, and produces professional results without the headache. We injected a "Tambo" personality to make the mundane task of invoicing actually engaging.
