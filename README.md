@@ -6,7 +6,7 @@ Turn your financial anxiety into professional PDFs. InvoiceAI uses AI to generat
 
 > **Engineered by [Tambo AI](https://tambo.co)** - Because humans are bad at math.
 
-![InvoiceAI Screenshot](/Octo-Icon.svg)
+![InvoiceAI Screenshot](/public/Octo-Icon.svg)
 
 ## 🚀 Features
 
