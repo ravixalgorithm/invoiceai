@@ -1,29 +1,30 @@
 # InvoiceAI 💸
 
-**Invoices that slap harder than coffee.**
+<div align="left">
+  <img src="public/Octo-Icon.svg" alt="Tambo AI" width="60" />
+</div>
 
-Turn your financial anxiety into professional PDFs. InvoiceAI uses AI to generate invoices so you can focus on pretending to be a professional.
+**Professional Invoicing, Powered by Tambo AI.**
 
-> **Engineered by [Tambo AI](https://tambo.co)** - Because humans are bad at math.
+InvoiceAI is a modern, AI-driven invoicing platform designed to streamline your financial workflow. Ensure your invoices look as professional as your work, with intelligent automation and a sleek user interface.
 
-![InvoiceAI Screenshot](/public/Octo-Icon.svg)
+> **Engineered by [Tambo AI](https://tambo.co)**.
 
 ## 🚀 Features
 
-*   **AI Invoice Generation**: Yell at the AI ("Make an invoice for $500 for web design") and it does the work.
-*   **Judgmental UI**: A user interface that subtly mocks your life choices while helping you get paid.
-*   **Pixel-Perfect PDFs**: Generates beautiful, clean invoices (no Word Art here).
-*   **Organization Management**: Manage multiple businesses (or just the one you're failing at).
-*   **Chat-Based Interface**: Interact with your financial data naturally using **Tambo AI**.
-*   **Saved History**: Local storage of your past invoices so you can reminisce about that one time you got paid.
+*   **AI-Powered Generation**: Simply describe the invoice you need, and Tambo AI constructs it instantly.
+*   **Professional Templates**: Generate clean, industry-standard PDF invoices.
+*   **Organization Management**: seamlessly manage multiple business identities from a single dashboard.
+*   **Smart History**: Automatically saves and indexes your invoice history for easy retrieval.
+*   **Modern Dashboard**: A responsive, accessible, and dark-mode compatible interface built for speed.
 
 ## 🛠️ Tech Stack
 
 *   **Frontend**: [Next.js 15](https://nextjs.org/) (App Directory)
-*   **AI Integration**: [Tambo AI](https://tambo.co)
+*   **Intelligence**: [Tambo AI](https://tambo.co)
 *   **Database**: [Supabase](https://supabase.com/)
-*   **Styling**: Valid CSS / Tailwind (because we have taste)
-*   **Auth**: Supabase Auth
+*   **Styling**: Tailwind CSS
+*   **Authentication**: Supabase Auth
 
 ## 📦 Getting Started
 
