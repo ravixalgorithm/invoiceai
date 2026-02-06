@@ -32,8 +32,8 @@ export default function LandingPage() {
             <section className="flex flex-col md:flex-row border-b-2 border-dashed border-gray-900 divide-y-2 md:divide-y-0 md:divide-x-2 divide-dashed divide-gray-900">
                 {/* Left Content */}
                 <div className="flex-1 p-12 flex flex-col justify-center items-start bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]">
-                    <h1 className="text-6xl md:text-8xl font-bold text-black mb-6 leading-[0.9] font-[family-name:var(--font-cursive)]">
-                        Invoices that <br />
+                    <h1 className="text-5xl md:text-8xl font-bold text-black mb-6 leading-[0.9] font-[family-name:var(--font-cursive)]">
+                        Invoices&nbsp;that <br />
                         <span className="text-[#6366F1] underline decoration-wavy decoration-2 underline-offset-2">slap harder</span> <br />
                         than coffee.
                     </h1>
