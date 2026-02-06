@@ -1,131 +1,61 @@
-# Tambo Template
+# InvoiceAI 💸
 
-This is a starter NextJS app with Tambo hooked up to get your AI app development started quickly.
+**Invoices that slap harder than coffee.**
 
-## Get Started
+Turn your financial anxiety into professional PDFs. InvoiceAI uses AI to generate invoices so you can focus on pretending to be a professional.
 
-1. Run `npm create-tambo@latest my-tambo-app` for a new project
+> **Engineered by [Tambo AI](https://tambo.co)** - Because humans are bad at math.
 
-2. `npm install`
+![InvoiceAI Screenshot](/Octo-Icon.svg)
 
-3. `npx tambo init`
+## 🚀 Features
 
-- or rename `example.env.local` to `.env.local` and add your tambo API key you can get for free [here](https://tambo.co/dashboard).
+*   **AI Invoice Generation**: Yell at the AI ("Make an invoice for $500 for web design") and it does the work.
+*   **Judgmental UI**: A user interface that subtly mocks your life choices while helping you get paid.
+*   **Pixel-Perfect PDFs**: Generates beautiful, clean invoices (no Word Art here).
+*   **Organization Management**: Manage multiple businesses (or just the one you're failing at).
+*   **Chat-Based Interface**: Interact with your financial data naturally using **Tambo AI**.
+*   **Saved History**: Local storage of your past invoices so you can reminisce about that one time you got paid.
 
-4. Run `npm run dev` and go to `localhost:3000` to use the app!
+## 🛠️ Tech Stack
 
-## Customizing
+*   **Frontend**: [Next.js 15](https://nextjs.org/) (App Directory)
+*   **AI Integration**: [Tambo AI](https://tambo.co)
+*   **Database**: [Supabase](https://supabase.com/)
+*   **Styling**: Valid CSS / Tailwind (because we have taste)
+*   **Auth**: Supabase Auth
 
-### Change what components tambo can control
+## 📦 Getting Started
 
-You can see how components are registered with tambo in `src/lib/tambo.ts`:
+1.  **Clone the Repo**
+    ```bash
+    git clone https://github.com/ravixalgorithm/invoiceai.git
+    cd invoiceai
+    ```
 
-```tsx
-export const components: TamboComponent[] = [
-  {
-    name: "Graph",
-    description:
-      "A component that renders various types of charts (bar, line, pie) using Recharts. Supports customizable data visualization with labels, datasets, and styling options.",
-    component: Graph,
-    propsSchema: graphSchema,
-  },
-  // Add more components here
-];
-```
+2.  **Install Dependencies**
+    ```bash
+    npm install
+    ```
 
-You can install the graph component into any project with:
+3.  **Environment Setup**
+    Rename `example.env.local` to `.env.local` and add your keys:
+    ```bash
+    NEXT_PUBLIC_TAMBO_API_KEY=your_tambo_key
+    NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+    NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_key
+    ```
 
-```bash
-npx tambo add graph
-```
+4.  **Run It**
+    ```bash
+    npm run dev
+    ```
+    Go to `localhost:3000` and start invoicing.
 
-The example Graph component demonstrates several key features:
+## 🤝 Contributing
 
-- Different prop types (strings, arrays, enums, nested objects)
-- Multiple chart types (bar, line, pie)
-- Customizable styling (variants, sizes)
-- Optional configurations (title, legend, colors)
-- Data visualization capabilities
+Don't. Just use it to get paid.
+(Just kidding, PRs welcome but keep existing satirical tone).
 
-Update the `components` array with any component(s) you want tambo to be able to use in a response!
-
-You can find more information about the options [here](https://docs.tambo.co/concepts/generative-interfaces/generative-components)
-
-### Add tools for tambo to use
-
-Tools are defined with `inputSchema` and `outputSchema`:
-
-```tsx
-export const tools: TamboTool[] = [
-  {
-    name: "globalPopulation",
-    description:
-      "A tool to get global population trends with optional year range filtering",
-    tool: getGlobalPopulationTrend,
-    inputSchema: z.object({
-      startYear: z.number().optional(),
-      endYear: z.number().optional(),
-    }),
-    outputSchema: z.array(
-      z.object({
-        year: z.number(),
-        population: z.number(),
-        growthRate: z.number(),
-      }),
-    ),
-  },
-];
-```
-
-Find more information about tools [here.](https://docs.tambo.co/concepts/tools)
-
-### The Magic of Tambo Requires the TamboProvider
-
-Make sure in the TamboProvider wrapped around your app:
-
-```tsx
-...
-<TamboProvider
-  apiKey={process.env.NEXT_PUBLIC_TAMBO_API_KEY!}
-  components={components} // Array of components to control
-  tools={tools} // Array of tools it can use
->
-  {children}
-</TamboProvider>
-```
-
-In this example we do this in the `Layout.tsx` file, but you can do it anywhere in your app that is a client component.
-
-### Voice input
-
-The template includes a `DictationButton` component using the `useTamboVoice` hook for speech-to-text input.
-
-### MCP (Model Context Protocol)
-
-The template includes MCP support for connecting to external tools and resources. You can use the MCP hooks from `@tambo-ai/react/mcp`:
-
-- `useTamboMcpPromptList` - List available prompts from MCP servers
-- `useTamboMcpPrompt` - Get a specific prompt
-- `useTamboMcpResourceList` - List available resources
-
-See `src/components/tambo/mcp-components.tsx` for example usage.
-
-### Change where component responses are shown
-
-The components used by tambo are shown alongside the message response from tambo within the chat thread, but you can have the result components show wherever you like by accessing the latest thread message's `renderedComponent` field:
-
-```tsx
-const { thread } = useTambo();
-const latestComponent =
-  thread?.messages[thread.messages.length - 1]?.renderedComponent;
-
-return (
-  <div>
-    {latestComponent && (
-      <div className="my-custom-wrapper">{latestComponent}</div>
-    )}
-  </div>
-);
-```
-
-For more detailed documentation, visit [Tambo's official docs](https://docs.tambo.co).
+---
+*Powered by Tambo AI* | *Engineered for chaos*
