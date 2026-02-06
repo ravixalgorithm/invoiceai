@@ -4,13 +4,19 @@ import { useTamboThread } from "@tambo-ai/react";
 import { MessageInput, MessageInputTextarea, MessageInputSubmitButton } from "@/components/tambo/message-input";
 import { ThreadContent, ThreadContentMessages } from "@/components/tambo/thread-content";
 import { ScrollableMessageContainer } from "@/components/tambo/scrollable-message-container";
-import { Send, Trash2 } from "lucide-react";
+import { Send, Trash2, X } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-export function ChatPanel() {
+interface ChatPanelProps {
+    className?: string;
+    onClose?: () => void;
+}
+
+export function ChatPanel({ className, onClose }: ChatPanelProps) {
     const { startNewThread } = useTamboThread();
 
     return (
-        <aside className="fixed right-0 top-0 h-screen w-80 bg-white border-l-2 border-dashed border-black flex flex-col z-40 hidden lg:flex">
+        <aside className={cn("fixed right-0 top-0 h-screen w-80 bg-white border-l-2 border-dashed border-black flex flex-col z-40 transition-transform duration-300", className)}>
             <div className="p-4 border-b-2 border-dashed border-black flex items-center justify-between bg-yellow-100/50 backdrop-blur-sm sticky top-0 z-10">
                 <div className="flex items-center gap-3">
                     <span className="relative flex h-2.5 w-2.5 mt-1">
@@ -28,13 +34,23 @@ export function ChatPanel() {
                         </span>
                     </div>
                 </div>
-                <button
-                    onClick={() => startNewThread()}
-                    className="p-1.5 hover:bg-red-50 text-gray-400 hover:text-red-500 rounded-lg transition-colors group"
-                    title="Clear Chat History"
-                >
-                    <Trash2 className="w-4 h-4 group-hover:scale-110 transition-transform" />
-                </button>
+                <div className="flex items-center gap-1">
+                    <button
+                        onClick={() => startNewThread()}
+                        className="p-1.5 hover:bg-red-50 text-gray-400 hover:text-red-500 rounded-lg transition-colors group"
+                        title="Clear Chat History"
+                    >
+                        <Trash2 className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                    </button>
+                    {onClose && (
+                        <button
+                            onClick={onClose}
+                            className="lg:hidden p-1.5 hover:bg-gray-100 text-gray-500 rounded-lg transition-colors"
+                        >
+                            <X className="w-4 h-4" />
+                        </button>
+                    )}
+                </div>
             </div>
 
             <div className="flex-1 overflow-hidden relative bg-white flex flex-col">
@@ -48,8 +64,8 @@ export function ChatPanel() {
             <div className="bg-white border-t-2 border-dashed border-black">
                 <MessageInput variant="ghost" className="relative">
                     <MessageInputTextarea
-                        placeholder="Type to edit invoice..."
-                        className="w-full h-full min-h-[140px] pr-12 pl-4 pt-[6px] pb-3 bg-yellow-100/50 bg-[linear-gradient(transparent_31px,#e5e7eb_31px)] bg-[length:100%_32px] bg-local font-[family-name:var(--font-bricolage)] resize-none focus:ring-0 border-none rounded-none focus:outline-none [&_.tiptap]:!p-0 [&_.tiptap]:!leading-8 [&_p]:!leading-8 [&_p]:!my-0"
+                        placeholder="✨ Describe your invoice here... e.g. 'Create an invoice for John Doe with 2 items'"
+                        className="w-full h-full min-h-[140px] pr-12 pl-4 pt-[6px] pb-3 bg-yellow-100/50 bg-[linear-gradient(transparent_31px,#e5e7eb_31px)] bg-[length:100%_32px] bg-local font-[family-name:var(--font-bricolage)] resize-none focus:ring-0 border-none rounded-none focus:outline-none [&_.tiptap]:!p-0 [&_.tiptap]:!leading-8 [&_p]:!leading-8 [&_p]:!my-0 placeholder:text-gray-400 placeholder:italic"
                     />
                     <MessageInputSubmitButton className="absolute right-3 bottom-3 p-2 rounded-lg bg-[#6366F1] text-white hover:bg-[#6366F1]/90 transition-colors z-10">
                         <Send className="w-4 h-4" />

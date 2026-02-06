@@ -37,27 +37,50 @@ export default function LoginPage() {
         setIsLoading(true);
         setMessage(null);
 
-        const action = isSignUp ? supabase.auth.signUp : supabase.auth.signInWithPassword;
+        try {
+            if (isSignUp) {
+                const { data, error } = await supabase.auth.signUp({
+                    email,
+                    password,
+                    options: {
+                        emailRedirectTo: `${location.origin}/auth/callback`
+                    }
+                });
 
-        const { data, error } = await action({
-            email,
-            password,
-            options: isSignUp ? {
-                emailRedirectTo: `${location.origin}/auth/callback`
-            } : undefined
-        });
+                if (error) {
+                    setMessage(error.message);
+                    setIsLoading(false);
+                    return;
+                }
 
-        if (error) {
-            setMessage(error.message);
+                if (data.user && !data.session) {
+                    setMessage("Check your email for the confirmation link!");
+                    setIsLoading(false);
+                    return;
+                }
+
+                // If we get a session immediately (email confirmation disabled)
+                setIsLoading(false);
+                router.push("/dashboard");
+            } else {
+                const { data, error } = await supabase.auth.signInWithPassword({
+                    email,
+                    password,
+                });
+
+                if (error) {
+                    setMessage(error.message);
+                    setIsLoading(false);
+                    return;
+                }
+
+                // Success - redirect to dashboard
+                setIsLoading(false);
+                router.push("/dashboard");
+            }
+        } catch (err: any) {
+            setMessage(err.message || "An error occurred");
             setIsLoading(false);
-            return;
-        }
-
-        if (isSignUp && data.user && !data.session) {
-            setMessage("Check your email for the confirmation link!");
-            setIsLoading(false);
-        } else {
-            router.push("/dashboard");
         }
     };
 

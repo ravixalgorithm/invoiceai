@@ -7,18 +7,18 @@ export default function LandingPage() {
         <div className="min-h-screen mb-5 bg-white font-sans text-gray-900 overflow-x-hidden flex flex-col border-x-2 border-dashed border-gray-900 max-w-7xl mx-auto shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]">
 
             {/* Navigation */}
-            <nav className="h-24 flex items-center justify-between px-8 border-b-2 border-dashed border-gray-900 bg-white sticky top-0 z-50">
-                <div className="flex flex-col">
-                    <div className="text-3xl font-bold tracking-tighter text-black font-[family-name:var(--font-bricolage)] leading-none">
+            <nav className="h-auto py-4 md:h-24 md:py-0 flex flex-col md:flex-row items-center justify-between px-4 md:px-8 border-b-2 border-dashed border-gray-900 bg-white sticky top-0 z-50 gap-4 md:gap-0">
+                <div className="flex flex-col items-center md:items-start">
+                    <div className="text-2xl md:text-3xl font-bold tracking-tighter text-black font-[family-name:var(--font-bricolage)] leading-none">
                         invoiceai
                     </div>
                     <div className="flex items-center gap-1.5 mt-1">
-                        <span className="text-[10px] font-bold tracking-wider uppercase text-gray-500">Powered by</span>
+                        <span className="text-[8px] md:text-[10px] font-bold tracking-wider uppercase text-gray-500">Powered by</span>
                         <img src="/Octo-Icon.svg" alt="Tambo" className="w-3 h-3 object-contain" />
-                        <span className="text-[#7FFFC3] font-extrabold text-xs uppercase tracking-wider bg-black px-1 rounded-sm">Tambo AI</span>
+                        <span className="text-[#7FFFC3] font-extrabold text-[10px] md:text-xs uppercase tracking-wider bg-black px-1 rounded-sm">Tambo AI</span>
                     </div>
                 </div>
-                <div className="flex gap-8">
+                <div className="hidden md:flex gap-8">
                     <Link
                         href="/dashboard"
                         className="bg-black text-white text-lg px-6 py-2 font-bold border-2 border-black shadow-[5px_5px_0px_0px_#6366F1] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[3px_3px_0px_0px_#6366F1] transition-all font-[family-name:var(--font-bricolage)]"
@@ -212,22 +212,22 @@ export default function LandingPage() {
             </section>
 
             {/* CTA Section */}
-            <section className="py-24 bg-[#6366F1] text-white text-center relative overflow-hidden">
-                <div className="absolute inset-0 bg-[url('/noise.png')] opacity-10"></div>
-                <h2 className="text-6xl md:text-8xl font-bold mb-8 font-[family-name:var(--font-cursive)] relative z-10">
+            <section className="py-24 bg-[#6366F1] text-white text-center relative overflow-hidden px-4">
+                <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] opacity-20"></div>
+                <h2 className="text-4xl md:text-8xl font-bold mb-8 font-[family-name:var(--font-cursive)] relative z-10 break-words">
                     Stop procrastinating.
                 </h2>
                 <Link
                     href="/dashboard"
-                    className="inline-block bg-white text-black text-2xl px-12 py-6 font-bold border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all font-[family-name:var(--font-bricolage)] relative z-10"
+                    className="inline-block bg-white text-black text-xl md:text-2xl px-8 py-4 md:px-12 md:py-6 font-bold border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] md:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all font-[family-name:var(--font-bricolage)] relative z-10"
                 >
                     Generate Invoice Now
                 </Link>
             </section>
 
             {/* Footer */}
-            <footer className="border-t-2 border-dashed border-gray-900 p-8 flex justify-between items-center bg-gray-50">
-                <div className="flex flex-col gap-1">
+            <footer className="border-t-2 border-dashed border-gray-900 p-8 flex flex-col md:flex-row justify-between items-center bg-gray-50 gap-6 md:gap-0">
+                <div className="flex flex-col gap-1 text-center md:text-left">
                     <div className="font-[family-name:var(--font-bricolage)] text-xl font-bold">invoiceai © 2026</div>
                     <div className="text-xs text-gray-500 font-[family-name:var(--font-bricolage)]">Don't sue us.</div>
                 </div>
