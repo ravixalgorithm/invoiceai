@@ -100,7 +100,7 @@ export default function LandingPage() {
                 <div className="grid grid-cols-1 md:grid-cols-3">
                     {/* Card 1 */}
                     <div className="border-1 border-dashed border-gray-900 p-8 hover:bg-gray-50 transition-colors">
-                        <h4 className="font-bold text-3xl mb-4 font-[family-name:var(--font-cursive)]">AI That Judges</h4>
+                        <h4 className="font-bold text-3xl mb-4 font-[family-name:var(--font-cursive)]">Ai That judges</h4>
                         <p className="text-lg text-gray-700 font-medium font-[family-name:var(--font-bricolage)]">
                             Our AI knows when you're undercharging. It won't stop you, but it will silently judge your life choices.
                         </p>
