@@ -374,21 +374,21 @@ export default function DashboardPage() {
     };
 
     const headerActions = (
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2 md:gap-3">
             <button
                 onClick={handleSaveDraft}
                 disabled={saving}
-                className="px-6 py-2.5 rounded-xl border-2 border-black bg-white text-black font-bold hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-150 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:shadow-none font-[family-name:var(--font-bricolage)] flex items-center gap-2 disabled:opacity-50"
+                className="px-3 md:px-6 py-2 md:py-2.5 text-xs md:text-base rounded-lg md:rounded-xl border-2 border-black bg-white text-black font-bold hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-150 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] md:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] active:shadow-none font-[family-name:var(--font-bricolage)] flex items-center gap-1.5 md:gap-2 disabled:opacity-50"
             >
-                {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : savedSuccess ? <Check className="w-4 h-4 text-green-600" /> : <Save className="w-4 h-4" />}
+                {saving ? <Loader2 className="w-3 md:w-4 h-3 md:h-4 animate-spin" /> : savedSuccess ? <Check className="w-3 md:w-4 h-3 md:h-4 text-green-600" /> : <Save className="w-3 md:w-4 h-3 md:h-4" />}
                 {savedSuccess ? "Saved!" : "Save Draft"}
             </button>
             <button
                 onClick={handleDownload}
                 disabled={downloading}
-                className="px-6 py-2.5 rounded-xl bg-black text-white border-2 border-black font-bold hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-150 shadow-[4px_4px_0px_0px_#6366F1] hover:shadow-[2px_2px_0px_0px_#6366F1] active:shadow-none font-[family-name:var(--font-bricolage)] flex items-center gap-2 disabled:opacity-50"
+                className="px-3 md:px-6 py-2 md:py-2.5 text-xs md:text-base rounded-lg md:rounded-xl bg-black text-white border-2 border-black font-bold hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-150 shadow-[2px_2px_0px_0px_#6366F1] md:shadow-[4px_4px_0px_0px_#6366F1] hover:shadow-[1px_1px_0px_0px_#6366F1] active:shadow-none font-[family-name:var(--font-bricolage)] flex items-center gap-1.5 md:gap-2 disabled:opacity-50"
             >
-                {downloading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
+                {downloading ? <Loader2 className="w-3 md:w-4 h-3 md:h-4 animate-spin" /> : <Download className="w-3 md:w-4 h-3 md:h-4" />}
                 Download
             </button>
         </div>

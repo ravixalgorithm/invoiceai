@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { FileText, LogOut, Building2, Plus, ChevronsUpDown, Check, X } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, memo } from "react";
 
 interface Organization {
     id: string;
@@ -18,9 +18,9 @@ interface ProfileProps {
     avatar_url?: string;
 }
 
-const NavItem = ({ icon: Icon, label, href, active = false }: { icon: any, label: string, href: string, active?: boolean }) => {
+const NavItem = ({ icon: Icon, label, href, active = false, onClick }: { icon: any, label: string, href: string, active?: boolean, onClick?: () => void }) => {
     return (
-        <Link href={href} className="w-full">
+        <Link href={href} className="w-full" onClick={onClick}>
             <button
                 className={cn(
                     "w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold transition-all duration-150 text-left border-2",
@@ -56,9 +56,10 @@ interface SidebarProps {
     onOrgChange?: (org: Organization) => void;
     className?: string;
     onClose?: () => void;
+    onNavigate?: () => void;
 }
 
-export function Sidebar({ organization, organizations = [], user, profile, onOrgChange, className, onClose }: SidebarProps) {
+export const Sidebar = memo(({ organization, organizations = [], user, profile, onOrgChange, className, onClose, onNavigate }: SidebarProps) => {
     const pathname = usePathname();
     const avatarUrl = profile?.avatar_url || getDefaultAvatar(user?.email || user?.id || 'user');
     const displayName = profile?.full_name || user?.email?.split('@')[0] || 'User';
@@ -81,10 +82,11 @@ export function Sidebar({ organization, organizations = [], user, profile, onOrg
             onOrgChange(org);
         }
         setShowOrgDropdown(false);
+        onClose?.();
     };
 
     return (
-        <aside className={cn("fixed left-0 top-0 h-[100dvh] w-full sm:w-72 md:w-72 bg-white border-r-2 border-dashed border-black flex flex-col z-40 transition-transform duration-300 overflow-y-auto", className)}>
+        <aside className={cn("h-[100dvh] w-screen max-w-full md:w-72 md:fixed md:left-0 md:top-0 bg-white border-r-2 border-dashed border-black flex flex-col transition-transform duration-300 overflow-y-auto overflow-x-hidden z-50", className)}>
             {/* Mobile Header with Close */}
             {onClose && (
                 <div className="md:hidden flex items-center justify-between p-4 border-b border-dashed border-gray-200">
@@ -155,7 +157,7 @@ export function Sidebar({ organization, organizations = [], user, profile, onOrg
                                     </button>
                                 ))}
                             </div>
-                            <Link href="/dashboard/organization" onClick={() => setShowOrgDropdown(false)}>
+                            <Link href="/dashboard/organization" onClick={() => { setShowOrgDropdown(false); onClose?.(); }}>
                                 <div className="p-3 border-t border-dashed border-gray-200 flex items-center gap-2 text-sm font-bold text-gray-600 hover:bg-gray-50 transition-colors">
                                     <Plus className="w-4 h-4" />
                                     Add Organization
@@ -167,14 +169,14 @@ export function Sidebar({ organization, organizations = [], user, profile, onOrg
 
                 {/* Navigation */}
                 <nav className="flex flex-col gap-2 flex-1 mt-6">
-                    <NavItem icon={Plus} label="New Invoice" href="/dashboard" active={pathname === '/dashboard'} />
-                    <NavItem icon={FileText} label="My Invoices" href="/dashboard/invoices" active={pathname === '/dashboard/invoices'} />
-                    <NavItem icon={Building2} label="Organization" href="/dashboard/organization" active={pathname === '/dashboard/organization'} />
+                    <NavItem icon={Plus} label="New Invoice" href="/dashboard" active={pathname === '/dashboard'} onClick={() => { onClose?.(); onNavigate?.(); }} />
+                    <NavItem icon={FileText} label="My Invoices" href="/dashboard/invoices" active={pathname === '/dashboard/invoices'} onClick={() => { onClose?.(); onNavigate?.(); }} />
+                    <NavItem icon={Building2} label="Organization" href="/dashboard/organization" active={pathname === '/dashboard/organization'} onClick={() => { onClose?.(); onNavigate?.(); }} />
                 </nav>
 
                 {/* Bottom Profile Section */}
                 <div className="mt-auto pt-12 pb-8 border-t-2 border-dashed border-gray-300">
-                    <Link href="/dashboard/profile">
+                    <Link href="/dashboard/profile" onClick={() => { onClose?.(); onNavigate?.(); }}>
                         <div className="flex items-center gap-3 p-3 border-2 border-black rounded-xl shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] bg-white mb-4 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all cursor-pointer">
                             <img
                                 src={avatarUrl}
@@ -205,4 +207,6 @@ export function Sidebar({ organization, organizations = [], user, profile, onOrg
             </div>
         </aside>
     );
-}
+});
+
+Sidebar.displayName = "Sidebar";

@@ -28,7 +28,7 @@ const EditableField = ({
             name={name}
             className="w-full bg-transparent border-b-2 border-transparent hover:border-dashed hover:border-gray-300 focus:border-black focus:outline-none py-1 text-ink-primary transition-all placeholder:text-gray-300 font-[family-name:var(--font-bricolage)]"
             placeholder={placeholder}
-            value={value}
+            value={value ?? ''}
             onChange={(e) => onChange?.(e.target.value)}
         />
         <div className="absolute inset-0 -z-10 bg-yellow-50 opacity-0 group-hover:opacity-100 transition-opacity rounded-sm pointer-events-none" />
@@ -218,16 +218,16 @@ export const InvoiceForm = forwardRef<InvoiceFormRef, {}>((props, ref) => {
     }, []);
 
     return (
-        <div className="flex justify-center p-8 overflow-hidden">
-            {/* The "Paper" - A4 Aspect Ratio */}
+        <div className="flex justify-center md:p-8">
+            {/* The "Paper" - Scales to fit on mobile, A4 on desktop */}
             <div
                 ref={invoiceRef}
                 id="invoice-content"
-                className="w-full max-w-[210mm] min-h-[297mm] bg-white shadow-[8px_8px_0px_0px_rgba(0,0,0,0.2)] border-2 border-gray-100 p-[20mm] relative animate-in fade-in zoom-in-95 duration-500"
+                className="w-full md:max-w-[210mm] md:min-h-[297mm] bg-white md:shadow-[8px_8px_0px_0px_rgba(0,0,0,0.2)] border md:border-2 border-gray-200 md:border-gray-100 p-4 md:p-[20mm] relative text-sm md:text-base"
             >
                 {/* Header Section */}
-                <div className="flex justify-between items-start mb-12">
-                    <div className="w-1/2">
+                <div className="flex flex-col md:flex-row justify-between items-start mb-6 md:mb-12 gap-4">
+                    <div className="w-full md:w-1/2">
                         {organization?.logo_url ? (
                             <img src={organization.logo_url} alt="Logo" className="h-16 w-auto object-contain mb-4" />
                         ) : (
@@ -245,8 +245,8 @@ export const InvoiceForm = forwardRef<InvoiceFormRef, {}>((props, ref) => {
                             {organization?.email && <div>{organization.email}</div>}
                         </div>
                     </div>
-                    <div className="text-right">
-                        <h1 className="text-4xl font-black text-gray-900 mb-2 font-[family-name:var(--font-bricolage)] tracking-tighter">INVOICE</h1>
+                    <div className="text-left md:text-right">
+                        <h1 className="text-2xl md:text-4xl font-black text-gray-900 mb-2 font-[family-name:var(--font-bricolage)] tracking-tighter">INVOICE</h1>
                         <div className="flex flex-col items-end gap-2">
                             <div className="flex items-center gap-4">
                                 <span className="text-gray-500 font-medium">#</span>
@@ -261,7 +261,7 @@ export const InvoiceForm = forwardRef<InvoiceFormRef, {}>((props, ref) => {
                 </div>
 
                 {/* Client Details */}
-                <div className="grid grid-cols-2 gap-12 mb-16">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 mb-8 md:mb-16">
                     <div>
                         <h3 className="text-xs font-black uppercase text-gray-400 mb-4 tracking-widest">Bill To</h3>
                         <div className="space-y-2">
@@ -287,12 +287,7 @@ export const InvoiceForm = forwardRef<InvoiceFormRef, {}>((props, ref) => {
                     <EditableField label="NOTES" value={notes} onChange={setNotes} placeholder="Thank you for your business..." className="text-gray-600 text-sm" />
                 </div>
 
-                {/* Decorative "Hole Punches" just for vibes - hidden in print */}
-                <div className="absolute left-4 top-1/2 -translate-y-1/2 flex flex-col gap-32 opacity-20 print:hidden">
-                    <div className="w-4 h-4 rounded-full bg-black"></div>
-                    <div className="w-4 h-4 rounded-full bg-black"></div>
-                    <div className="w-4 h-4 rounded-full bg-black"></div>
-                </div>
+
 
                 {/* On-screen Watermark */}
                 <div className="absolute bottom-4 right-8 text-[10px] text-gray-300 font-bold uppercase tracking-widest print:hidden pointer-events-none">

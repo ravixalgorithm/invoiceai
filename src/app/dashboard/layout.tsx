@@ -2,7 +2,7 @@
 
 import { createClient } from "@/lib/supabase/client";
 import { useRouter, usePathname } from "next/navigation";
-import { useState, useEffect, createContext, useContext } from "react";
+import { useState, useEffect, createContext, useContext, useMemo } from "react";
 import { Sidebar } from "@/components/dashboard/Sidebar";
 import { ChatPanel } from "@/components/dashboard/ChatPanel";
 import { Loader2, Menu, MessageCircle, Sparkles } from "lucide-react";
@@ -75,45 +75,42 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         try {
             const { data: { user }, error: authError } = await supabase.auth.getUser();
 
-            if (authError) {
+            if (authError || !user) {
                 console.error("Auth error:", authError);
-                router.push("/login");
-                return;
-            }
-
-            if (!user) {
                 router.push("/login");
                 return;
             }
             setUser(user);
 
-            // Fetch organizations
-            const { data: orgs } = await supabase
-                .from('organizations')
-                .select('*')
-                .eq('user_id', user.id)
-                .order('created_at', { ascending: true });
+            // Parallelize fetching organizations and profile
+            const [orgsResult, profileResult] = await Promise.all([
+                supabase
+                    .from('organizations')
+                    .select('*')
+                    .eq('user_id', user.id)
+                    .order('created_at', { ascending: true }),
+                supabase
+                    .from('profiles')
+                    .select('*')
+                    .eq('id', user.id)
+                    .single()
+            ]);
 
-            setOrganizations(orgs || []);
-            if (orgs && orgs.length > 0) {
+            const orgs = orgsResult.data || [];
+            setOrganizations(orgs);
+
+            if (orgs.length > 0) {
                 setSelectedOrg(orgs[0]);
             } else {
-                // No organizations - redirect to onboarding
                 router.push("/onboarding");
                 return;
             }
 
-            // Fetch profile (optional - don't fail if missing)
-            const { data: profileData } = await supabase
-                .from('profiles')
-                .select('*')
-                .eq('id', user.id)
-                .single();
-            setProfile(profileData);
-
+            setProfile(profileResult.data);
             setLoading(false);
         } catch (err) {
             console.error("Dashboard fetch error:", err);
+            setLoading(false);
             router.push("/login");
         }
     };
@@ -132,6 +129,22 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         setSelectedOrg(org);
     };
 
+    const [isNavigating, setIsNavigating] = useState(false);
+
+    useEffect(() => {
+        setIsNavigating(false);
+    }, [pathname]);
+
+    const contextValue = useMemo(() => ({
+        user,
+        organizations,
+        selectedOrg,
+        profile,
+        setSelectedOrg,
+        refreshOrganizations,
+        setIsNavigating
+    }), [user, organizations, selectedOrg, profile]);
+
     if (loading) {
         return (
             <div className="flex h-screen items-center justify-center bg-[#F0F0F0]">
@@ -141,16 +154,16 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     }
 
     return (
-        <DashboardContext.Provider value={{
-            user,
-            organizations,
-            selectedOrg,
-            profile,
-            setSelectedOrg,
-            refreshOrganizations
-        }}>
+        <DashboardContext.Provider value={contextValue}>
             <div className="flex min-h-screen bg-[#F0F0F0] font-sans relative">
                 <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] -z-10 bg-fixed"></div>
+
+                {/* Performance Progress Bar */}
+                {isNavigating && (
+                    <div className="fixed top-0 left-0 right-0 h-[3px] bg-transparent z-[100]">
+                        <div className="h-full bg-black animate-[loading_2s_ease-in-out_infinite] shadow-[0_0_10px_rgba(99,102,241,0.5)]" style={{ width: '40%' }}></div>
+                    </div>
+                )}
 
                 {/* Mobile Header - only after mount to avoid hydration mismatch */}
                 {mounted && (
@@ -165,7 +178,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                         <div className="w-9 flex justify-end">
                             {showChatPanel && (
                                 <button
-                                    onClick={() => setIsChatOpen(true)}
+                                    onClick={() => { setIsChatOpen(true); setIsNavigating(true); }}
                                     className="p-1.5 bg-black rounded-lg shadow-[2px_2px_0px_0px_rgba(99,102,241,1)] active:translate-y-[1px] active:shadow-none transition-all"
                                 >
                                     <img src="/Octo-Icon.svg" alt="AI" className="w-5 h-5" />
@@ -192,6 +205,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                         user={user}
                         profile={profile}
                         onOrgChange={handleOrgChange}
+                        onNavigate={() => setIsNavigating(true)}
                     />
                 </div>
                 {/* Mobile: Drawer */}
@@ -207,13 +221,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                             profile={profile}
                             onOrgChange={handleOrgChange}
                             onClose={() => setIsSidebarOpen(false)}
+                            onNavigate={() => setIsNavigating(true)}
                         />
                     </div>
                 )}
 
                 {/* Main Content - this is what changes on navigation */}
                 <main className={cn(
-                    "flex-1 ml-0 md:ml-72 p-4 md:p-8 bg-background relative z-0 transition-all duration-300 pt-20 md:pt-8",
+                    "flex-1 ml-0 md:ml-72 p-2 md:p-8 bg-background relative z-0 transition-all duration-300 pt-16 md:pt-8",
                     showChatPanel ? 'lg:mr-80' : ''
                 )}>
                     <div className="w-full max-w-7xl mx-auto">

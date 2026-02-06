@@ -108,13 +108,13 @@ export const InvoiceTable = forwardRef<InvoiceTableRef, {}>((props, ref) => {
             </div>
 
             <div className="overflow-x-auto">
-                <table className="w-full min-w-[600px] border-t-2 border-b-2 border-black">
+                <table className="w-full border-t-2 border-b-2 border-black text-xs md:text-sm">
                     <thead className="bg-gray-50">
                         <tr>
-                            <th className="p-3 text-left text-xs font-black text-black uppercase tracking-widest w-[45%]">Description</th>
-                            <th className="p-3 text-right text-xs font-black text-black uppercase tracking-widest w-[15%]">Qty</th>
-                            <th className="p-3 text-right text-xs font-black text-black uppercase tracking-widest w-[20%]">Price</th>
-                            <th className="p-3 text-right text-xs font-black text-black uppercase tracking-widest w-[15%]">Total</th>
+                            <th className="p-2 md:p-3 text-left text-[10px] md:text-xs font-black text-black uppercase tracking-widest w-[40%]">Description</th>
+                            <th className="p-2 md:p-3 text-right text-[10px] md:text-xs font-black text-black uppercase tracking-widest w-[15%]">Qty</th>
+                            <th className="p-2 md:p-3 text-right text-[10px] md:text-xs font-black text-black uppercase tracking-widest w-[20%]">Price</th>
+                            <th className="p-2 md:p-3 text-right text-[10px] md:text-xs font-black text-black uppercase tracking-widest w-[20%]">Total</th>
                             <th className="w-[5%]"></th>
                         </tr>
                     </thead>

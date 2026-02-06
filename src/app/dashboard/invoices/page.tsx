@@ -181,37 +181,38 @@ export default function InvoicesPage() {
                 </div>
 
                 {/* Invoices List */}
-                <div className="bg-white border-2 border-dashed border-gray-300 rounded-xl overflow-hidden">
+                <div className="bg-white border-2 border-black rounded-2xl shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] overflow-hidden min-h-[400px]">
                     {loading ? (
-                        <div className="p-12 text-center">
-                            <Loader2 className="w-8 h-8 animate-spin mx-auto text-gray-400" />
+                        <div className="p-24 text-center flex flex-col items-center justify-center">
+                            <Loader2 className="w-10 h-10 animate-spin text-[#6366F1] mb-4" />
+                            <p className="text-gray-400 font-medium animate-pulse">Fetching your invoices...</p>
                         </div>
                     ) : filteredInvoices.length === 0 ? (
                         <div className="p-12 text-center">
                             <FileText className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                            <p className="text-gray-500 font-medium">
+                            <p className="text-gray-500 font-medium font-[family-name:var(--font-bricolage)]">
                                 {invoices.length === 0
                                     ? "No invoices yet. Create your first invoice!"
                                     : "No invoices match your search."}
                             </p>
                             {invoices.length === 0 && (
                                 <Link href="/dashboard">
-                                    <button className="mt-4 bg-black text-white px-6 py-2 font-bold rounded-lg">
+                                    <button className="mt-4 bg-black text-white px-6 py-2 font-bold rounded-xl shadow-[4px_4px_0px_0px_rgba(99,102,241,1)] active:translate-y-[2px] active:shadow-none transition-all">
                                         Create Invoice
                                     </button>
                                 </Link>
                             )}
                         </div>
                     ) : (
-                        <div className="divide-y divide-dashed divide-gray-200">
+                        <div className="divide-y-2 divide-gray-100">
                             {/* Table Header */}
-                            <div className="hidden md:grid grid-cols-12 gap-4 p-4 bg-gray-50 text-xs font-bold text-gray-500 uppercase tracking-wider">
+                            <div className="hidden md:grid grid-cols-12 gap-4 px-6 py-4 bg-gray-50/50 border-b-2 border-black/5 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">
                                 <div className="col-span-1">Invoice</div>
-                                <div className="col-span-3">Client</div>
+                                <div className="col-span-3">Client Information</div>
                                 <div className="col-span-2">Date</div>
                                 <div className="col-span-2">Status</div>
-                                <div className="col-span-2 text-right">Amount</div>
-                                <div className="col-span-2 text-right">Actions</div>
+                                <div className="col-span-2 text-right">Total Amount</div>
+                                <div className="col-span-2 text-right px-4">Actions</div>
                             </div>
 
                             {/* Invoice Rows */}
@@ -219,64 +220,98 @@ export default function InvoicesPage() {
                                 const statusInfo = statusConfig[invoice.status];
 
                                 return (
-                                    <div
-                                        key={invoice.id}
-                                        className="grid grid-cols-1 md:grid-cols-12 gap-4 p-4 hover:bg-gray-50 transition-colors items-center"
-                                    >
-                                        {/* Invoice Number */}
-                                        <div className="col-span-1">
-                                            <span className="font-bold text-sm">
-                                                #{invoice.invoice_number || invoice.id.slice(0, 8)}
-                                            </span>
-                                        </div>
-
-                                        {/* Client */}
-                                        <div className="col-span-3">
-                                            <p className="font-bold truncate">{invoice.client_name || "No client"}</p>
-                                            <p className="text-sm text-gray-500 truncate">{invoice.client_email || "-"}</p>
-                                        </div>
-
-                                        {/* Date */}
-                                        <div className="col-span-2 text-sm text-gray-600">
-                                            {formatDate(invoice.invoice_date || invoice.created_at)}
-                                        </div>
-
-                                        {/* Status */}
-                                        <div className="col-span-2">
-                                            <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold border ${statusInfo.color}`}>
-                                                <span className={`w-1.5 h-1.5 rounded-full ${statusInfo.dotColor}`}></span>
-                                                {statusInfo.label}
-                                            </span>
-                                        </div>
-
-                                        {/* Amount */}
-                                        <div className="col-span-2 text-right">
-                                            <span className="font-bold">{formatCurrency(invoice.total || 0)}</span>
-                                        </div>
-
-                                        {/* Actions */}
-                                        <div className="col-span-2 flex items-center justify-end gap-2">
-                                            <Link href={`/dashboard?id=${invoice.id}`}>
-                                                <button
-                                                    className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                                                    title="View"
-                                                >
-                                                    <Eye className="w-4 h-4" />
+                                    <div key={invoice.id} className="group transition-all">
+                                        {/* Desktop View */}
+                                        <div className="hidden md:grid grid-cols-12 gap-4 px-6 py-5 hover:bg-yellow-50/30 transition-all items-center border-l-4 border-transparent hover:border-[#6366F1]">
+                                            <div className="col-span-1">
+                                                <span className="font-black text-sm bg-gray-100 px-2 py-1 rounded border-2 border-black inline-block">
+                                                    #{invoice.invoice_number || invoice.id.slice(0, 4)}
+                                                </span>
+                                            </div>
+                                            <div className="col-span-3">
+                                                <p className="font-bold text-black text-base truncate font-[family-name:var(--font-bricolage)]">
+                                                    {invoice.client_name || "No client"}
+                                                </p>
+                                                <p className="text-xs text-gray-500 truncate font-medium">{invoice.client_email || "No email provided"}</p>
+                                            </div>
+                                            <div className="col-span-2 text-sm font-bold text-gray-600">
+                                                {formatDate(invoice.invoice_date || invoice.created_at)}
+                                            </div>
+                                            <div className="col-span-2">
+                                                <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider border-2 border-black bg-white ${statusInfo.color}`}>
+                                                    <span className={`w-1.5 h-1.5 rounded-full ${statusInfo.dotColor} border border-black/20`}></span>
+                                                    {statusInfo.label}
+                                                </span>
+                                            </div>
+                                            <div className="col-span-2 text-right">
+                                                <span className="font-black text-lg text-black">{formatCurrency(invoice.total || 0)}</span>
+                                            </div>
+                                            <div className="col-span-2 flex items-center justify-end gap-2 px-4">
+                                                <Link href={`/dashboard?id=${invoice.id}`}>
+                                                    <button className="p-2.5 bg-white border-2 border-black rounded-xl hover:bg-gray-50 transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-y-[1px] active:shadow-none" title="View & Edit">
+                                                        <Eye className="w-4 h-4" />
+                                                    </button>
+                                                </Link>
+                                                <button className="p-2.5 bg-white border-2 border-black rounded-xl hover:bg-gray-50 transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-y-[1px] active:shadow-none" title="Download PDF">
+                                                    <Download className="w-4 h-4" />
                                                 </button>
-                                            </Link>
-                                            <button
-                                                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                                                title="Download"
-                                            >
-                                                <Download className="w-4 h-4" />
-                                            </button>
-                                            <button
-                                                onClick={() => handleDelete(invoice.id)}
-                                                className="p-2 hover:bg-red-50 text-red-500 rounded-lg transition-colors"
-                                                title="Delete"
-                                            >
-                                                <Trash2 className="w-4 h-4" />
-                                            </button>
+                                                <button
+                                                    onClick={() => handleDelete(invoice.id)}
+                                                    className="p-2.5 bg-red-50 text-red-500 border-2 border-red-500 rounded-xl hover:bg-red-100 transition-all shadow-[2px_2px_0px_0px_rgba(239,68,68,1)] active:translate-y-[1px] active:shadow-none"
+                                                    title="Delete"
+                                                >
+                                                    <Trash2 className="w-4 h-4" />
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        {/* Mobile View - Polished Card */}
+                                        <div className="md:hidden p-4">
+                                            <div className="bg-white border-2 border-black rounded-2xl p-5 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all">
+                                                <div className="flex justify-between items-start mb-4">
+                                                    <span className="bg-gray-100 px-3 py-1 rounded-lg text-xs font-black uppercase tracking-tighter border-2 border-black">
+                                                        #{invoice.invoice_number || invoice.id.slice(0, 8)}
+                                                    </span>
+                                                    <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest border-2 border-black ${statusInfo.color}`}>
+                                                        {statusInfo.label}
+                                                    </span>
+                                                </div>
+
+                                                <div className="mb-6">
+                                                    <h3 className="text-xl font-bold font-[family-name:var(--font-bricolage)] text-black mb-1">
+                                                        {invoice.client_name || "No client"}
+                                                    </h3>
+                                                    <div className="flex items-center gap-2 text-gray-500">
+                                                        <Clock className="w-3 h-3" />
+                                                        <span className="text-xs font-bold">{formatDate(invoice.invoice_date || invoice.created_at)}</span>
+                                                    </div>
+                                                </div>
+
+                                                <div className="flex items-center justify-between pt-4 border-t-2 border-dashed border-black/10">
+                                                    <div>
+                                                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-0.5">Total Amount</p>
+                                                        <p className="text-xl font-black text-black">
+                                                            {formatCurrency(invoice.total || 0)}
+                                                        </p>
+                                                    </div>
+                                                    <div className="flex items-center gap-1">
+                                                        <Link href={`/dashboard?id=${invoice.id}`}>
+                                                            <button className="p-3 bg-white border-2 border-black rounded-xl hover:bg-gray-50 transition-colors shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-y-[2px]">
+                                                                <Eye className="w-4 h-4" />
+                                                            </button>
+                                                        </Link>
+                                                        <button className="p-3 bg-white border-2 border-black rounded-xl hover:bg-gray-50 transition-colors shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-y-[2px]">
+                                                            <Download className="w-4 h-4" />
+                                                        </button>
+                                                        <button
+                                                            onClick={() => handleDelete(invoice.id)}
+                                                            className="p-3 bg-red-50 text-red-500 border-2 border-red-500 rounded-xl hover:bg-red-100 transition-colors shadow-[2px_2px_0px_0px_rgba(239,68,68,1)] active:shadow-none active:translate-y-[2px]"
+                                                        >
+                                                            <Trash2 className="w-4 h-4" />
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 );

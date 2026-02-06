@@ -1,6 +1,6 @@
 "use client";
 
-import { useTamboThread } from "@tambo-ai/react";
+import { useTamboThread, useTambo } from "@tambo-ai/react";
 import { MessageInput, MessageInputTextarea, MessageInputSubmitButton } from "@/components/tambo/message-input";
 import { ThreadContent, ThreadContentMessages } from "@/components/tambo/thread-content";
 import { ScrollableMessageContainer } from "@/components/tambo/scrollable-message-container";
@@ -14,9 +14,12 @@ interface ChatPanelProps {
 
 export function ChatPanel({ className, onClose }: ChatPanelProps) {
     const { startNewThread } = useTamboThread();
+    const { thread } = useTambo();
+    const messages = thread?.messages ?? [];
+    const hasMessages = messages.filter((m: any) => m.role !== 'system').length > 0;
 
     return (
-        <aside className={cn("fixed right-0 top-0 h-screen w-80 bg-white border-l-2 border-dashed border-black flex flex-col z-40 transition-transform duration-300", className)}>
+        <aside className={cn("h-[100dvh] w-full md:w-80 md:fixed md:right-0 md:top-0 bg-white border-l-2 border-dashed border-black flex flex-col transition-transform duration-300", className)}>
             <div className="p-4 border-b-2 border-dashed border-black flex items-center justify-between bg-yellow-100/50 backdrop-blur-sm sticky top-0 z-10">
                 <div className="flex items-center gap-3">
                     <span className="relative flex h-2.5 w-2.5 mt-1">
@@ -54,9 +57,30 @@ export function ChatPanel({ className, onClose }: ChatPanelProps) {
             </div>
 
             <div className="flex-1 overflow-hidden relative bg-white flex flex-col">
-                <ScrollableMessageContainer>
+                <ScrollableMessageContainer className="flex-1">
                     <ThreadContent>
                         <ThreadContentMessages />
+                        {!hasMessages && (
+                            <div className="flex flex-col items-center justify-center min-h-[400px] h-full p-8 text-center animate-in fade-in zoom-in duration-500">
+                                <div className="w-16 h-16 bg-yellow-100 rounded-2xl flex items-center justify-center mb-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] border-2 border-black rotate-3">
+                                    <img src="/Octo-Icon.svg" alt="Tambo" className="w-10 h-10 animate-bounce" />
+                                </div>
+                                <h3 className="text-xl font-bold text-black font-[family-name:var(--font-bricolage)] mb-2 uppercase tracking-tight">
+                                    Ready to assist!
+                                </h3>
+                                <p className="text-sm text-gray-500 font-medium leading-relaxed max-w-[200px]">
+                                    Type below to start creating your perfect invoice.
+                                </p>
+                                <div className="mt-6 flex flex-col gap-2 w-full max-w-[240px]">
+                                    <div className="p-3 bg-gray-50 border-2 border-dashed border-gray-200 rounded-xl text-[10px] font-bold text-gray-400 text-left">
+                                        "Create an invoice for Acme Corp"
+                                    </div>
+                                    <div className="p-3 bg-gray-50 border-2 border-dashed border-gray-200 rounded-xl text-[10px] font-bold text-gray-400 text-left">
+                                        "Add 5% discount to this invoice"
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                     </ThreadContent>
                 </ScrollableMessageContainer>
             </div>
