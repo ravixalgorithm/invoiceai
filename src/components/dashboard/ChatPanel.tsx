@@ -89,7 +89,7 @@ export function ChatPanel({ className, onClose }: ChatPanelProps) {
                 <MessageInput variant="ghost" className="relative">
                     <MessageInputTextarea
                         placeholder="✨ Describe your invoice here... e.g. 'Create an invoice for John Doe with 2 items'"
-                        className="w-full h-full min-h-[140px] pr-12 pl-4 pt-[6px] pb-3 bg-yellow-100/50 bg-[linear-gradient(transparent_31px,#e5e7eb_31px)] bg-[length:100%_32px] bg-local font-[family-name:var(--font-bricolage)] resize-none focus:ring-0 border-none rounded-none focus:outline-none [&_.tiptap]:!p-0 [&_.tiptap]:!leading-8 [&_p]:!leading-8 [&_p]:!my-0 placeholder:text-gray-400 placeholder:italic"
+                        className="w-full h-full min-h-[140px] pr-12 pl-4 pt-[6px] pb-3 bg-yellow-100/50 bg-[linear-gradient(transparent_31px,#e5e7eb_31px)] bg-[length:100%_32px] bg-local font-[family-name:var(--font-bricolage)] resize-none focus:ring-0 border-none rounded-none focus:outline-none [&_.tiptap]:!leading-8 [&_p]:!leading-8 placeholder:text-gray-400 placeholder:italic"
                     />
                     <MessageInputSubmitButton className="absolute right-3 bottom-3 p-2 rounded-lg bg-[#6366F1] text-white hover:bg-[#6366F1]/90 transition-colors z-10">
                         <Send className="w-4 h-4" />

@@ -497,9 +497,6 @@ const MessageInputInternal = React.forwardRef<
   React.useEffect(() => {
     setDisplayValue(value);
     storeValueInSessionStorage(thread.id, value);
-    if (value && editorRef.current) {
-      editorRef.current.focus();
-    }
   }, [value, thread.id]);
 
   const handleSubmit = React.useCallback(
